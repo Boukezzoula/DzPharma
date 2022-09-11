@@ -41,7 +41,7 @@ export default function Welcome({ navigation }) {
             alignSelf: "center",
           }}
           titleStyle={{ marginHorizontal: 5, color: "#fff" }}
-          onPress={() => navigation.navigate("root")}
+          onPress={() => navigation.navigate("singupScreen")}
         >
           {t("user_signup")}
           <Icon name="user-plus" color="#fff" size={18} />
