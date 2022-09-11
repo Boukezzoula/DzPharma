@@ -1,18 +1,29 @@
 import { Button } from "@rneui/base";
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { Input } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
+import { KeyboardAvoidingView } from "react-native";
 
 export default function Welcome({ navigation }) {
   const { t, i18n } = useTranslation();
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <View style={styles.container_inputstyle}>
-        <Input placeholder="Email" />
-        <Input placeholder="Password" secureTextEntry={true} />
+        <Input
+          placeholder="Email"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+        />
+        <Input
+          placeholder="Password"
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+          secureTextEntry={true}
+        />
       </View>
       <View style={styles.container_buttonstyle}>
         <Button
@@ -47,7 +58,7 @@ export default function Welcome({ navigation }) {
           <Icon name="user-plus" color="#fff" size={18} />
         </Button>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 const styles = StyleSheet.create({
