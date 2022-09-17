@@ -5,17 +5,35 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 import { Input } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import { KeyboardAvoidingView } from "react-native";
-
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
 export default function Welcome({ navigation }) {
   const { t, i18n } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const loginUser = (email, password) => {
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log("logged in correcct");
+        navigation.navigate("MainApp", { screen: "Settings" });
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+  };
   return (
     <KeyboardAvoidingView style={styles.container}>
       <View style={styles.container_inputstyle}>
         <Input
           placeholder="Email"
           value={email}
+          autoCapitalize="none"
           onChangeText={(text) => setEmail(text)}
         />
         <Input
@@ -37,7 +55,7 @@ export default function Welcome({ navigation }) {
           }}
           titleStyle={{ marginHorizontal: 5, color: "#fff" }}
           onPress={() => {
-            navigation.navigate("root", { screen: "emergency" });
+            loginUser(email, password);
           }}
         >
           {t("user_login")}
